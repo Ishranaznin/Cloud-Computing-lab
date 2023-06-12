@@ -1,5 +1,3 @@
-
-
 from flask import Flask
 
 app = Flask(__name__)
@@ -12,10 +10,11 @@ def hello():
     count = 0
     number = 2  # Start with the first even number
     while count < n:
-        even_numbers.append(number)
+        even_numbers.append(str(number))
         count += 1
         number += 2  # Increment by 2 to get the next even number
-        even_numbers_string = ", ".join(even_numbers)
+    
+    even_numbers_string = ", ".join(map(str, even_numbers))
     return even_numbers_string
 
 
