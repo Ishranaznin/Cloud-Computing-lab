@@ -1,14 +1,16 @@
-from flask import Flask, jsonify
+from google.appengine.ext import ndb
 
-app = Flask(__name__)
+class EvenNumber(ndb.Model):
+  number = ndb.IntegerProperty()
 
-
-@app.route('/even/<int:n>', methods=['GET'])
 def generate_even_numbers(n):
-    """Generate n even numbers and return as JSON."""
-    even_numbers = [num for num in range(2, 2 * n + 1, 2)]
-    return jsonify(even_numbers)
+  for i in range(n):
+    even_number = EvenNumber(number=i * 2)
+    even_number.put()
 
+def main():
+  n = int(input("Enter the number of even numbers to generate: "))
+  generate_even_numbers(n)
 
-if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8080, debug=True)
+if __name__ == "__main__":
+  main()
