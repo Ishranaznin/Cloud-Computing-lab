@@ -1,16 +1,23 @@
-from google.appengine.ext import ndb
 
-class EvenNumber(ndb.Model):
-  number = ndb.IntegerProperty()
 
-def generate_even_numbers(n):
-  for i in range(n):
-    even_number = EvenNumber(number=i * 2)
-    even_number.put()
+from flask import Flask
 
-def main():
-  n = int(input("Enter the number of even numbers to generate: "))
-  generate_even_numbers(n)
+app = Flask(__name__)
 
-if __name__ == "__main__":
-  main()
+
+@app.route('/')
+def hello():
+    n = int(input("Enter the value of n: "))
+    even_numbers = []
+    count = 0
+    number = 2  # Start with the first even number
+    while count < n:
+        even_numbers.append(number)
+        count += 1
+        number += 2  # Increment by 2 to get the next even number
+        even_numbers_string = ", ".join(even_numbers)
+    return even_numbers_string
+
+
+if __name__ == '__main__':
+      app.run(host='127.0.0.1', port=8080, debug=True)
